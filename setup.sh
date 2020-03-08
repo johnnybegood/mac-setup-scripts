@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # List of applications to install via brew
-declare -a brewApps=("mas" "python" "git" "nvm" "wget" "zsh" "zplug" "duti" "azure-cli" "jmeter" "openssl" "cocoapods" "dnscrypt-proxy")
+declare -a brewApps=("mas" "python" "git" "ykman" "nvm" "wget" "zsh" "zplug" "duti" "azure-cli" "jmeter" "openssl" "cocoapods" "dnscrypt-proxy")
 
 # List of applications to install via brew cask
 declare -a brewCaskApps=("micro-snitch" "little-snitch" "iterm2" "the-unarchiver" "1password" "firefox" "dotnet" "powershell" "docker" "visual-studio-code" "caffeine" "sketch" "axure-rp" "fritzing" "spotify" "dbeaver-community" "balenaetcher" "airserver" "visual-studio" "microsoft-office" "notion" "microsoft-team" "fromscratch" "owasp-zap" "google-chrome" "postman" "wireshark" "zoomus" "font-fira-code" "vlc" "parallels" "yubico-authenticator")
@@ -177,6 +177,7 @@ plugins=(
 )
 source $ZSH/oh-my-zsh.sh
 source $ZPLUG_HOME/init.zsh
+source <(_YKMAN_COMPLETE=source ykman | sudo tee /etc/bash_completion.d/ykman)
 
 autoload bashcompinit
 bashcompinit
