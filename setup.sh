@@ -40,6 +40,7 @@ xcode-select --install
 # https://stackoverflow.com/a/26647594/77814
 echo "Setting correct permissions on folders that brew needs acccess to."
 sudo chown -R `whoami`:admin /usr/local/bin
+sudo chown -R `whoami`:admin /usr/local/sbin
 sudo chown -R `whoami`:admin /usr/local/share
 
 # Install applications
@@ -57,8 +58,8 @@ command -v brew >/dev/null 2>&1 || {
 } | tee -a $logFile
 
 echo "Setting up some brew tap stuff for fonts and some applications" | tee -a $logFile
-brew tap caskroom/versions | tee -a $logFile
-brew tap caskroom/fonts | tee -a $logFile
+brew tap homebrew/cask-versions | tee -a $logFile
+brew tap homebrew/cask-fonts | tee -a $logFile
 echo "Finished setting up some brew tap stuff for fonts and some applications" | tee -a $logFile
 
 for appName in "${brewApps[@]}"
@@ -139,7 +140,7 @@ echo "Just a few final touches..." | tee -a $logFile
 # Make zsh the default shell
 echo "Making zsh the default shell" | tee -a $logFile
 
-sudo dscl . -create /Users/$USER UserShell /usr/local/bin/zsh | tee -a $logFile
+sudo dscl . -create /Users/$USER UserShell /bin/zsh | tee -a $logFile
 echo which zsh | tee -a $logFile
 dscl . -read /Users/$USER UserShell | tee -a $logFile
 echo $SHELL | tee -a $logFile
@@ -154,7 +155,6 @@ git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-m
 echo "Creating .zshrc file" | tee -a $logFile
 touch ~/.zshrc | tee -a $logFile
 echo "export ZPLUG_HOME=/usr/local/opt/zplug
-export ZPLUG_HOME=/usr/local/opt/zplug
 export GEM_HOME=$HOME/.gem
 export NVM_LAZY_LOAD=true
 export PATH=$HOME/.rbenv/shims:$GEM_HOME/bin:$HOME/.cargo/bin:$PATH
@@ -185,9 +185,6 @@ alias rimraf='rm -rf'
 alias flushdns='sudo killall -HUP mDNSResponder'
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"" > ~/.zshrc | tee -a $logFile
 
-echo "Testing zsh prompt" | tee -a $logFile
-zsh | tee -a $logFile
-
 echo "Installing some extensions for Visual Studio Code" | tee -a $logFile
 for extension in "${codeExtensions[@]}"
 do
@@ -198,10 +195,9 @@ do
     installComplete $extension | tee -a $logFile
 done
 
-
 echo "Securing machine,  manual interaction is required" | tee -a $logFile
-pip install stronghold | tee -a $logFile
-stronghold | tee -a $logFile
+sudo pip install stronghold | tee -a $logFile
+sudo stronghold | tee -a $logFile
 
 echo "Updating host file" | tee -a $logFile
 curl https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts | sudo tee -a /etc/hosts
@@ -209,5 +205,6 @@ curl https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts | sudo tee
 echo "Verifying new host file size" | tee -a $logFile
 wc -l /etc/hosts | tee -a $logFile
 
-echo "Finished setup /n/n/n"
+echo "Finished setup \n\n\n"
 echo "A setup log is available at $logFile."
+echo "Some components require a reboot"
