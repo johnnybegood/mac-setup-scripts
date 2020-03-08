@@ -4,7 +4,7 @@
 declare -a brewApps=("mas" "python" "git" "nvm" "wget" "zsh" "zplug" "duti" "azure-cli" "jmeter" "openssl" "cocoapods" "dnscrypt-proxy")
 
 # List of applications to install via brew cask
-declare -a brewCaskApps=("micro-snitch" "little-snitch" "iterm2" "the-unarchiver" "1password" "firefox" "dotnet" "powershell" "docker" "visual-studio-code" "caffeine" "sketch" "axure-rp" "fritzing" "spotify" "dbeaver-community" "balenaetcher" "airserver" "visual-studio" "microsoft-office" "notion" "microsoft-team" "fromscratch" "owasp-zap" "google-chrome" "postman" "wireshark" "zoomus" "font-fira-code" "vlc" "parallels")
+declare -a brewCaskApps=("micro-snitch" "little-snitch" "iterm2" "the-unarchiver" "1password" "firefox" "dotnet" "powershell" "docker" "visual-studio-code" "caffeine" "sketch" "axure-rp" "fritzing" "spotify" "dbeaver-community" "balenaetcher" "airserver" "visual-studio" "microsoft-office" "notion" "microsoft-team" "fromscratch" "owasp-zap" "google-chrome" "postman" "wireshark" "zoomus" "font-fira-code" "vlc" "parallels" "yubico-authenticator")
 
 # Global node packages to install
 declare -a globalNodePackages=("npm@latest" "yarn")
