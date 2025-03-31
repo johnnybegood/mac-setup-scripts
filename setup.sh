@@ -1,10 +1,10 @@
 #!/bin/sh
 
 # List of applications to install via brew
-declare -a brewApps=("mas" "python" "git" "ykman" "nvm" "wget" "zsh" "zplug" "duti" "azure-cli" "jmeter" "openssl" "cocoapods" "dnscrypt-proxy")
+declare -a brewApps=("mas" "python" "git" "ykman" "nvm" "wget" "zsh" "zplug" "duti" "azure-cli" "openssl", "dotnet", "jandedobbeleer/oh-my-posh/oh-my-posh")
 
 # List of applications to install via brew cask
-declare -a brewCaskApps=("micro-snitch" "little-snitch" "iterm2" "the-unarchiver" "1password" "firefox" "dotnet" "powershell" "docker" "visual-studio-code" "caffeine" "sketch" "axure-rp" "fritzing" "spotify" "dbeaver-community" "balenaetcher" "airserver" "visual-studio" "microsoft-office" "notion" "microsoft-team" "fromscratch" "owasp-zap" "google-chrome" "postman" "wireshark" "zoomus" "font-fira-code" "vlc" "parallels" "yubico-authenticator")
+declare -a brewCaskApps=("iterm2" "the-unarchiver" "1password" "firefox" "powershell" "docker" "visual-studio-code" "caffeine" "spotify" "postman" "wireshark" "font-fira-code" "vlc" "parallels" "yubico-authenticator")
 
 # Global node packages to install
 declare -a globalNodePackages=("npm@latest" "yarn")
@@ -13,11 +13,8 @@ declare -a globalNodePackages=("npm@latest" "yarn")
 declare -a codeExtensions=("auchenberg.vscode-browser-preview" "bencoleman.armview" "coolbear.systemd-unit-file" "cssho.vscode-svgviewer" "davidmarek.jsonpath-extract" "dbaeumer.vscode-eslint" "digital-molecules.service-bus-explorer" "DotJoshJohnson.xml" "dweizhe.docthis-customize-tags" "eamodio.gitlens" "EditorConfig.EditorConfig" "eg2.vscode-npm-script" "emilast.LogFileHighlighter" "fabianlauer.vs-code-xml-format" "felipecaputo.git-project-manager" "firefox-devtools.vscode-firefox-debug" "formulahendry.dotnet-test-explorer" "HookyQR.beautify" "k--kato.docomment" "mechatroner.rainbow-csv" "mermade.openapi-lint" "mkaufman.HTMLHint" "mkxml.vscode-filesize" "mohsen1.prettify-json" "ms-azure-devops.azure-pipelines" "ms-azuretools.vscode-apimanagement" "ms-azuretools.vscode-azurestorage" "ms-azuretools.vscode-cosmosdb" "ms-azuretools.vscode-docker" "ms-dotnettools.csharp" "ms-mssql.mssql" "ms-vscode.azure-account" "ms-vscode.azurecli" "ms-vscode.mono-debug" "ms-vscode.powershell" "ms-vsliveshare.vsliveshare" "ms-vsts.team" "msazurermtools.azurerm-vscode-tools" "msjsdiag.debugger-for-chrome" "philosowaffle.openapi-designer" "quicktype.quicktype" "redhat.vscode-yaml" "Shan.code-settings-sync" "VisualStudioExptTeam.vscodeintellicode" "vscode-icons-team.vscode-icons" "yzhang.markdown-all-in-one")
 
 # List of applications ids to install via Mac App Store
-# 441258766 Magnet
 # 497799835 Xcode
-# 1039633667 Irvue
-# 1250306151 Shotty
-declare -a masApps=("441258766" "497799835" "1039633667" "1250306151")
+declare -a masApps=("497799835")
 
 # Log file
 timestamp=$(date +%s)
@@ -155,6 +152,7 @@ git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-m
 echo "Creating .zshrc file" | tee -a $logFile
 touch ~/.zshrc | tee -a $logFile
 echo "export ZPLUG_HOME=/usr/local/opt/zplug
+export SSH_AUTH_SOCK=~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock
 export GEM_HOME=$HOME/.gem
 export NVM_LAZY_LOAD=true
 export PATH=$HOME/.rbenv/shims:$GEM_HOME/bin:$HOME/.cargo/bin:$PATH
@@ -171,9 +169,8 @@ plugins=(
   iterm2
   npm
   dotenv
-  osx
+  macos
   vscode
-  zsh-nvm
 )
 source $ZSH/oh-my-zsh.sh
 source $ZPLUG_HOME/init.zsh
@@ -196,15 +193,10 @@ do
     installComplete $extension | tee -a $logFile
 done
 
-echo "Securing machine,  manual interaction is required" | tee -a $logFile
-sudo pip install stronghold | tee -a $logFile
-sudo stronghold | tee -a $logFile
+echo "Setting up powershell profile" | tee -a $logFile
+touch ~/.config/powershell/profile.ps1 | tee -a $logFile
+echo "oh-my-posh init pwsh --config /opt/homebrew/opt/oh-my-posh/themes/cloud-native-azure.omp.json | Invoke-Expression" > ~/.config/powershell/profile.ps1 | tee -a $logFile
 
-echo "Updating host file" | tee -a $logFile
-curl https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts | sudo tee -a /etc/hosts
-
-echo "Verifying new host file size" | tee -a $logFile
-wc -l /etc/hosts | tee -a $logFile
 
 echo "Finished setup \n\n\n"
 echo "A setup log is available at $logFile."
