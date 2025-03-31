@@ -45,16 +45,7 @@ command -v brew >/dev/null 2>&1 || {
 
   /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
   installComplete "Homebrew"
-
-  beginInstallation "Homebrew Cask"
-  brew tap caskroom/cask
-  installComplete "Homebrew Cask"
 } | tee -a $logFile
-
-echo "Setting up some brew tap stuff for fonts and some applications" | tee -a $logFile
-brew tap homebrew/cask-versions | tee -a $logFile
-brew tap homebrew/cask-fonts | tee -a $logFile
-echo "Finished setting up some brew tap stuff for fonts and some applications" | tee -a $logFile
 
 for appName in "${brewApps[@]}"
 do
@@ -74,9 +65,9 @@ do
   beginInstallation $appName | tee -a $logFile
 
   if [ $reinstall=true ]; then
-    brew cask reinstall $appName | tee -a $logFile
+    brew reinstall $appName --cask | tee -a $logFile
   else
-    brew cask install $appName | tee -a $logFile
+    brew install $appName --cask | tee -a $logFile
   fi
 
   installComplete $appName | tee -a $logFile
