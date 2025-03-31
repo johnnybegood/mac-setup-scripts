@@ -9,9 +9,6 @@ declare -a brewCaskApps=("iterm2" "the-unarchiver" "1password" "firefox" "powers
 # Global node packages to install
 declare -a globalNodePackages=("npm@latest" "yarn")
 
-# Visual Studio Code extensions to install
-declare -a codeExtensions=("auchenberg.vscode-browser-preview" "bencoleman.armview" "coolbear.systemd-unit-file" "cssho.vscode-svgviewer" "davidmarek.jsonpath-extract" "dbaeumer.vscode-eslint" "digital-molecules.service-bus-explorer" "DotJoshJohnson.xml" "dweizhe.docthis-customize-tags" "eamodio.gitlens" "EditorConfig.EditorConfig" "eg2.vscode-npm-script" "emilast.LogFileHighlighter" "fabianlauer.vs-code-xml-format" "felipecaputo.git-project-manager" "firefox-devtools.vscode-firefox-debug" "formulahendry.dotnet-test-explorer" "HookyQR.beautify" "k--kato.docomment" "mechatroner.rainbow-csv" "mermade.openapi-lint" "mkaufman.HTMLHint" "mkxml.vscode-filesize" "mohsen1.prettify-json" "ms-azure-devops.azure-pipelines" "ms-azuretools.vscode-apimanagement" "ms-azuretools.vscode-azurestorage" "ms-azuretools.vscode-cosmosdb" "ms-azuretools.vscode-docker" "ms-dotnettools.csharp" "ms-mssql.mssql" "ms-vscode.azure-account" "ms-vscode.azurecli" "ms-vscode.mono-debug" "ms-vscode.powershell" "ms-vsliveshare.vsliveshare" "ms-vsts.team" "msazurermtools.azurerm-vscode-tools" "msjsdiag.debugger-for-chrome" "philosowaffle.openapi-designer" "quicktype.quicktype" "redhat.vscode-yaml" "Shan.code-settings-sync" "VisualStudioExptTeam.vscodeintellicode" "vscode-icons-team.vscode-icons" "yzhang.markdown-all-in-one")
-
 # List of applications ids to install via Mac App Store
 # 497799835 Xcode
 declare -a masApps=("497799835")
@@ -182,16 +179,6 @@ bashcompinit
 alias rimraf='rm -rf'
 alias flushdns='sudo killall -HUP mDNSResponder'
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"" > ~/.zshrc | tee -a $logFile
-
-echo "Installing some extensions for Visual Studio Code" | tee -a $logFile
-for extension in "${codeExtensions[@]}"
-do
-    beginInstallation $extension | tee -a $logFile
-
-    /usr/local/bin/code --install-extension $extension | tee -a $logFile
-
-    installComplete $extension | tee -a $logFile
-done
 
 echo "Setting up powershell profile" | tee -a $logFile
 touch ~/.config/powershell/profile.ps1 | tee -a $logFile
